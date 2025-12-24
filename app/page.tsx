@@ -13,6 +13,9 @@ import { Footerdemo } from "@/components/ui/footer-section";
 import { DIcons } from "dicons";
 import { Button } from "@/components/ui/button";
 import { Sun, Moon } from "lucide-react";
+import { AnimatedFolder } from "@/components/ui/3d-folder";
+import { LandingAccordionItem } from "@/components/ui/interactive-image-accordion";
+import TimeLine_01 from "@/components/ui/release-time-line";
 
 export default function Page() {
   const [isDarkMode, setIsDarkMode] = useState(true);
@@ -77,40 +80,91 @@ export default function Page() {
         <FeaturesSectionWithHoverEffects />
       </section>
 
+      {/* 5.5. 3D Folder Gallery */}
+      <section id="3d-folder" className="py-20 bg-gradient-to-b from-neutral-900 to-black">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-4xl font-bold text-white mb-4 text-center">Our Work</h2>
+          <p className="text-neutral-400 text-center mb-12 max-w-2xl mx-auto">Explore our latest projects and creations</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <AnimatedFolder
+              title="Design Projects"
+              projects={[
+                {
+                  id: "design-1",
+                  image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=500&h=500",
+                  title: "UI Design System",
+                },
+                {
+                  id: "design-2",
+                  image: "https://images.unsplash.com/photo-1561558636-d4c67c39b0d3?auto=format&fit=crop&q=80&w=500&h=500",
+                  title: "Brand Identity",
+                },
+                {
+                  id: "design-3",
+                  image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=500&h=500",
+                  title: "Visual Guidelines",
+                },
+              ]}
+            />
+            <AnimatedFolder
+              title="Development"
+              projects={[
+                {
+                  id: "dev-1",
+                  image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=500&h=500",
+                  title: "Web Application",
+                },
+                {
+                  id: "dev-2",
+                  image: "https://images.unsplash.com/photo-1633356122544-f134324ef6db?auto=format&fit=crop&q=80&w=500&h=500",
+                  title: "Mobile App",
+                },
+                {
+                  id: "dev-3",
+                  image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=500&h=500",
+                  title: "API Integration",
+                },
+              ]}
+            />
+            <AnimatedFolder
+              title="Creative Work"
+              projects={[
+                {
+                  id: "creative-1",
+                  image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=500&h=500",
+                  title: "Animation Assets",
+                },
+                {
+                  id: "creative-2",
+                  image: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=500&h=500",
+                  title: "Interactive Design",
+                },
+                {
+                  id: "creative-3",
+                  image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=500&h=500",
+                  title: "Motion Graphics",
+                },
+              ]}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* 5.6. Interactive Image Accordion */}
+      <section id="interactive-accordion" className="py-20 bg-neutral-50 dark:bg-neutral-950">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <LandingAccordionItem />
+        </div>
+      </section>
+
       {/* 6. Timeline */}
-      <section id="timeline" className="py-20">
-        <TimelineComponent data={[
-          {
-            title: "2024 - Foundation",
-            description: "Started the journey with a vision to create something meaningful. Built the core foundations and assembled the initial team.",
-            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800&h=600",
-            badge: "Q1 2024",
-          },
-          {
-            title: "2025 Q1 - Launch",
-            description: "Launched the first version of the platform. Received overwhelming positive feedback from early users.",
-            image: "https://images.unsplash.com/photo-1516534775068-bb57cc6de438?auto=format&fit=crop&q=80&w=800&h=600",
-            badge: "Q1 2025",
-          },
-          {
-            title: "2025 Q2 - Growth",
-            description: "Reached 1000+ users milestone. Expanded team and launched new features based on user feedback.",
-            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800&h=600",
-            badge: "Q2 2025",
-          },
-          {
-            title: "2025 Q3 - International",
-            description: "Expanded to international markets. Localized the platform for multiple languages and regions.",
-            image: "https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&q=80&w=800&h=600",
-            badge: "Q3 2025",
-          },
-          {
-            title: "2025 Q4 - Excellence",
-            description: "Achieved major product milestones. Won industry recognition and became the leading solution in our space.",
-            image: "https://images.unsplash.com/photo-1516534775068-bb57cc6de438?auto=format&fit=crop&q=80&w=800&h=600",
-            badge: "Q4 2025",
-          },
-        ]} />
+      <section id="timeline" className="py-20 bg-white dark:bg-neutral-900">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <TimeLine_01 
+            title="Product Roadmap"
+            description="Track our exciting releases and major milestones"
+          />
+        </div>
       </section>
 
       {/* 7. Testimonials */}
