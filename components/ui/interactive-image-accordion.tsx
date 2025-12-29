@@ -96,22 +96,22 @@ export function LandingAccordionItem() {
   };
 
   return (
-    <div className="bg-white font-sans">
+    <div className="bg-neutral-50 dark:bg-neutral-950 font-sans transition-colors duration-300">
       <section className="container mx-auto px-4 py-12 md:py-24">
         <div className="flex flex-col md:flex-row items-center justify-between gap-12">
           
           {/* Left Side: Text Content */}
           <div className="w-full md:w-1/2 text-center md:text-left">
-            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 leading-tight tracking-tighter">
-              Accelerate Gen-AI Tasks on Any Device
+            <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white leading-tight tracking-tighter transition-colors duration-300">
+              Next-Generation AI Solutions
             </h1>
-            <p className="mt-6 text-lg text-gray-600 max-w-xl mx-auto md:mx-0">
-              Build high-performance AI apps on-device without the hassle of model compression or edge deployment.
+            <p className="mt-6 text-lg text-gray-600 dark:text-gray-400 max-w-xl mx-auto md:mx-0 transition-colors duration-300">
+              Welbii harnesses advanced AI capabilities to deliver intelligent solutions that drive business value and competitive advantage.
             </p>
             <div className="mt-8">
               <a
                 href="#contact"
-                className="inline-block bg-gray-900 text-white font-semibold px-8 py-3 rounded-lg shadow-lg hover:bg-gray-800 transition-colors duration-300"
+                className="inline-block bg-gray-900 dark:bg-white text-white dark:text-gray-900 font-semibold px-8 py-3 rounded-lg shadow-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors duration-300"
               >
                 Contact Us
               </a>

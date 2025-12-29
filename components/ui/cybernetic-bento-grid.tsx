@@ -36,36 +36,40 @@ export const CyberneticBentoGrid = ({ lightMode = false }) => {
     return (
         <div className="main-container">
             <div className="w-full max-w-6xl z-10">
-                <h1 className={`text-4xl sm:text-5xl font-bold text-center mb-8 ${lightMode ? 'text-black' : 'text-white'}`}>Core Features</h1>
+                <h1 className={`text-4xl sm:text-5xl font-bold text-center mb-8 ${lightMode ? 'text-black' : 'text-white'}`}>What Makes Us Different</h1>
                 <div className="bento-grid">
                     <BentoItem className="col-span-2 row-span-2 flex flex-col justify-between" lightMode={lightMode}>
                         <div>
-                            <h2 className={`text-2xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>Real-time Analytics</h2>
-                            <p className={`mt-2 ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Monitor your application's performance with up-to-the-second data streams and visualizations.</p>
+                            <h2 className={`text-2xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>Data-Driven Insights</h2>
+                            <p className={`mt-2 ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Harness real-time analytics to make informed decisions. Track metrics that matter and optimize for measurable growth.</p>
                         </div>
                         <div className={`mt-4 h-48 rounded-lg flex items-center justify-center ${lightMode ? 'bg-gray-200 text-gray-400' : 'bg-neutral-800 text-gray-500'}`}>
                             Chart Placeholder
                         </div>
                     </BentoItem>
                     <BentoItem lightMode={lightMode}>
-                        <h2 className={`text-xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>Global CDN</h2>
-                        <p className={`mt-2 text-sm ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Deliver content at lightning speed, no matter where your users are.</p>
+                        <h2 className={`text-xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>Global Performance</h2>
+                        <p className={`mt-2 text-sm ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Lightning-fast delivery across continents. Your users experience seamless performance worldwide.</p>
                     </BentoItem>
                     <BentoItem lightMode={lightMode}>
-                        <h2 className={`text-xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>Secure Auth</h2>
-                        <p className={`mt-2 text-sm ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Enterprise-grade authentication and user management built-in.</p>
+                        <h2 className={`text-xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>Enterprise Security</h2>
+                        <p className={`mt-2 text-sm ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Bank-level security with sophisticated authentication. Protect what matters with zero-trust architecture.</p>
+                    </BentoItem>
+                    <BentoItem lightMode={lightMode}>
+                        <h2 className={`text-xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>Smart Integration</h2>
+                        <p className={`mt-2 text-sm ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Unified API orchestration for seamless system integration. Connect everything with intelligent routing.</p>
                     </BentoItem>
                     <BentoItem className="row-span-2" lightMode={lightMode}>
-                        <h2 className={`text-xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>Automated Backups</h2>
-                        <p className={`mt-2 text-sm ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Your data is always safe with automated, redundant backups.</p>
+                        <h2 className={`text-xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>Disaster Recovery</h2>
+                        <p className={`mt-2 text-sm ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Zero data loss with intelligent backup strategies. Instant recovery keeps your operations running 24/7.</p>
                     </BentoItem>
                     <BentoItem className="col-span-2" lightMode={lightMode}>
-                        <h2 className={`text-xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>Serverless Functions</h2>
-                        <p className={`mt-2 text-sm ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Run your backend code without managing servers. Scale infinitely with ease.</p>
+                        <h2 className={`text-xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>Serverless Architecture</h2>
+                        <p className={`mt-2 text-sm ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Auto-scaling infrastructure that grows with your business. Pay only for what you use, scale infinitely.</p>
                     </BentoItem>
                     <BentoItem lightMode={lightMode}>
-                        <h2 className={`text-xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>CLI Tool</h2>
-                        <p className={`mt-2 text-sm ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Manage your entire infrastructure from the command line.</p>
+                        <h2 className={`text-xl font-bold ${lightMode ? 'text-black' : 'text-white'}`}>Developer Tools</h2>
+                        <p className={`mt-2 text-sm ${lightMode ? 'text-gray-600' : 'text-gray-400'}`}>Powerful CLI and APIs for full control. Automate everything from your terminal.</p>
                     </BentoItem>
                 </div>
             </div>

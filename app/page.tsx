@@ -2,147 +2,113 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { Hero } from "@/components/ui/animated-hero";
+import { InfiniteGrid } from "@/components/ui/infinite-grid-integration";
 import { CyberneticBentoGrid } from "@/components/ui/cybernetic-bento-grid";
-import { Features } from "@/components/ui/features";
-import { FeaturesSectionWithHoverEffects } from "@/components/ui/feature-section-with-hover-effects";
 import { TimelineComponent } from "@/components/ui/timeline-new";
 import { LetsWorkTogether } from "@/components/ui/lets-work-section";
 import { TestimonialsSection } from "@/components/ui/testimonial-v2";
+import SpatialProductShowcase from "@/components/ui/spatial-product-showcase";
+import { NavBar } from "@/components/ui/tubelight-navbar";
 import { Footerdemo } from "@/components/ui/footer-section";
 import { DIcons } from "dicons";
 import { Button } from "@/components/ui/button";
-import { Sun, Moon } from "lucide-react";
+import { Sun, Moon, Home, Zap, Users, Briefcase, MessageSquare, Mail } from "lucide-react";
 import { AnimatedFolder } from "@/components/ui/3d-folder";
 import { LandingAccordionItem } from "@/components/ui/interactive-image-accordion";
 import TimeLine_01 from "@/components/ui/release-time-line";
 
 export default function Page() {
-  const [isDarkMode, setIsDarkMode] = useState(true);
-
   useEffect(() => {
-    if (isDarkMode) {
-      document.documentElement.classList.add("dark");
-    } else {
-      document.documentElement.classList.remove("dark");
-    }
-  }, [isDarkMode]);
+    document.documentElement.classList.remove("dark");
+  }, []);
+
   return (
     <>
-      {/* Theme Toggle Button */}
-      <button 
-        onClick={() => setIsDarkMode(!isDarkMode)}
-        className="fixed top-6 right-6 z-50 p-3 rounded-full bg-white dark:bg-neutral-900 text-neutral-800 dark:text-neutral-100 border border-neutral-200 dark:border-neutral-800 shadow-xl hover:scale-110 transition-all active:scale-95 focus:outline-none focus:ring-2 focus:ring-primary/50"
-        aria-label="Toggle Dark Mode"
-      >
-        {isDarkMode ? <Sun size={20} /> : <Moon size={20} />}
-      </button>
+      {/* Navigation Bar */}
+      <NavBar
+        items={[
+          { name: "Home", url: "#hero", icon: Home },
+          { name: "Features", url: "#bento", icon: Zap },
+          { name: "Portfolio", url: "#3d-folder", icon: Briefcase },
+          { name: "Products", url: "#product-showcase", icon: Users },
+          { name: "Testimonials", url: "#testimonials", icon: MessageSquare },
+          { name: "Contact", url: "#lets-work", icon: Mail },
+        ]}
+      />
 
-      {/* 2. Animated Hero */}
-      <section id="animated-hero" className="py-20">
-        <Hero />
+      {/* Hero Section with Infinite Grid */}
+      <section id="hero" className="overflow-hidden">
+        <InfiniteGrid />
       </section>
 
-      {/* 3. Cybernetic Bento Grid (Light Mode) */}
-      <section id="bento" className="py-20 bg-white">
+      {/* Cybernetic Bento Grid */}
+      <section id="bento" className="py-20 bg-white dark:bg-neutral-900 transition-colors duration-300">
         <CyberneticBentoGrid lightMode={true} />
       </section>
 
-      {/* 4. Features */}
-      <section id="features" className="py-20">
-        <Features features={[
-          {
-            id: 1,
-            icon: () => <div className="w-8 h-8 bg-blue-500 rounded"></div>,
-            title: "Feature One",
-            description: "Innovative solutions for your needs",
-            image: "/feature1.jpg",
-          },
-          {
-            id: 2,
-            icon: () => <div className="w-8 h-8 bg-green-500 rounded"></div>,
-            title: "Feature Two",
-            description: "Powerful tools at your fingertips",
-            image: "/feature2.jpg",
-          },
-          {
-            id: 3,
-            icon: () => <div className="w-8 h-8 bg-purple-500 rounded"></div>,
-            title: "Feature Three",
-            description: "Seamless integration and workflow",
-            image: "/feature3.jpg",
-          },
-        ]} />
-      </section>
-
-      {/* 5. Feature Section with Hover Effects */}
-      <section id="feature-hover" className="py-20">
-        <FeaturesSectionWithHoverEffects />
-      </section>
-
-      {/* 5.5. 3D Folder Gallery */}
-      <section id="3d-folder" className="py-20 bg-gradient-to-b from-neutral-900 to-black">
+      {/* 3D Folder Gallery */}
+      <section id="3d-folder" className="py-20 bg-gradient-to-b from-neutral-50 to-white dark:from-neutral-900 dark:to-neutral-950 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-4xl font-bold text-white mb-4 text-center">Our Work</h2>
-          <p className="text-neutral-400 text-center mb-12 max-w-2xl mx-auto">Explore our latest projects and creations</p>
+          <h2 className="text-4xl font-bold text-neutral-900 dark:text-white mb-4 text-center">Our Portfolio</h2>
+          <p className="text-neutral-600 dark:text-neutral-400 text-center mb-12 max-w-2xl mx-auto">Transforming ideas into award-winning software solutions</p>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <AnimatedFolder
-              title="Design Projects"
+              title="Design & UX"
               projects={[
                 {
                   id: "design-1",
                   image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=500&h=500",
-                  title: "UI Design System",
+                  title: "Enterprise Platforms",
                 },
                 {
                   id: "design-2",
                   image: "https://images.unsplash.com/photo-1561558636-d4c67c39b0d3?auto=format&fit=crop&q=80&w=500&h=500",
-                  title: "Brand Identity",
+                  title: "SaaS Solutions",
                 },
                 {
                   id: "design-3",
                   image: "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&q=80&w=500&h=500",
-                  title: "Visual Guidelines",
+                  title: "Digital Transformation",
                 },
               ]}
             />
             <AnimatedFolder
-              title="Development"
+              title="Backend & Infrastructure"
               projects={[
                 {
                   id: "dev-1",
                   image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=500&h=500",
-                  title: "Web Application",
+                  title: "Cloud Architecture",
                 },
                 {
                   id: "dev-2",
                   image: "https://images.unsplash.com/photo-1633356122544-f134324ef6db?auto=format&fit=crop&q=80&w=500&h=500",
-                  title: "Mobile App",
+                  title: "Microservices",
                 },
                 {
                   id: "dev-3",
                   image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&q=80&w=500&h=500",
-                  title: "API Integration",
+                  title: "DevOps Solutions",
                 },
               ]}
             />
             <AnimatedFolder
-              title="Creative Work"
+              title="Innovation & Strategy"
               projects={[
                 {
                   id: "creative-1",
                   image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=500&h=500",
-                  title: "Animation Assets",
+                  title: "AI/ML Integration",
                 },
                 {
                   id: "creative-2",
                   image: "https://images.unsplash.com/photo-1557821552-17105176677c?auto=format&fit=crop&q=80&w=500&h=500",
-                  title: "Interactive Design",
+                  title: "Automation Platforms",
                 },
                 {
                   id: "creative-3",
                   image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&q=80&w=500&h=500",
-                  title: "Motion Graphics",
+                  title: "Data Analytics",
                 },
               ]}
             />
@@ -150,15 +116,15 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 5.6. Interactive Image Accordion */}
-      <section id="interactive-accordion" className="py-20 bg-neutral-50 dark:bg-neutral-950">
+      {/* Interactive Image Accordion */}
+      <section id="interactive-accordion" className="py-20 bg-neutral-50 dark:bg-neutral-950 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <LandingAccordionItem />
         </div>
       </section>
 
-      {/* 6. Timeline */}
-      <section id="timeline" className="py-20 bg-white dark:bg-neutral-900">
+      {/* Timeline */}
+      <section id="timeline" className="py-20 bg-white dark:bg-neutral-900 transition-colors duration-300">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <TimeLine_01 
             title="Product Roadmap"
@@ -167,17 +133,22 @@ export default function Page() {
         </div>
       </section>
 
-      {/* 7. Testimonials */}
-      <section id="testimonials" className="py-20">
+      {/* Spatial Product Showcase */}
+      <section id="product-showcase" className="py-20 bg-white dark:bg-neutral-900 transition-colors duration-300">
+        <SpatialProductShowcase />
+      </section>
+
+      {/* Testimonials */}
+      <section id="testimonials" className="py-20 bg-white dark:bg-neutral-900 transition-colors duration-300">
         <TestimonialsSection />
       </section>
 
-      {/* 8. Lets Work Section */}
-      <section id="lets-work" className="py-20">
+      {/* Lets Work Section */}
+      <section id="lets-work" className="py-20 bg-neutral-50 dark:bg-neutral-950 transition-colors duration-300">
         <LetsWorkTogether />
       </section>
 
-      {/* 9. Footer */}
+      {/* Footer */}
       <Footerdemo />
     </>
   );
