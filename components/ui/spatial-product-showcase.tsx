@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { motion, AnimatePresence, Variants } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import {
   Battery,
   Sliders,
@@ -10,12 +10,8 @@ import {
   Bluetooth,
   Wifi,
   Music,
-  LucideIcon,
+  type LucideIcon,
 } from "lucide-react";
-
-// =========================================
-// 1) TYPES & DATA
-// =========================================
 
 export type ProductId = "left" | "right";
 
@@ -32,10 +28,10 @@ export interface ProductData {
   description: string;
   image: string;
   colors: {
-    gradient: string; // soft gradient
-    glow: string; // soft accent dot
-    ring: string; // ring color
-    bar: string; // progress bar color
+    gradient: string;
+    glow: string;
+    ring: string;
+    bar: string;
   };
   stats: {
     connectionStatus: string;
@@ -85,58 +81,6 @@ const PRODUCT_DATA: Record<ProductId, ProductData> = {
   },
 };
 
-// =========================================
-// 2) ANIMATIONS
-// =========================================
-
-const ANIMATIONS = {
-  container: {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: { staggerChildren: 0.1, delayChildren: 0.1 },
-    },
-    exit: { opacity: 0, transition: { duration: 0.2 } },
-  },
-  item: {
-    hidden: { opacity: 0, y: 18, filter: "blur(10px)" },
-    visible: {
-      opacity: 1,
-      y: 0,
-      filter: "blur(0px)",
-      transition: { type: "spring", stiffness: 110, damping: 22 },
-    },
-    exit: { opacity: 0, y: -10, filter: "blur(5px)" },
-  },
-  image: (isLeft: boolean): Variants => ({
-    initial: {
-      opacity: 0,
-      scale: 1.4,
-      filter: "blur(12px)",
-      rotate: isLeft ? -18 : 18,
-      x: isLeft ? -70 : 70,
-    },
-    animate: {
-      opacity: 1,
-      scale: 1,
-      filter: "blur(0px)",
-      rotate: 0,
-      x: 0,
-      transition: { type: "spring", stiffness: 240, damping: 22 },
-    },
-    exit: {
-      opacity: 0,
-      scale: 0.65,
-      filter: "blur(18px)",
-      transition: { duration: 0.22 },
-    },
-  }),
-};
-
-// =========================================
-// 3) UI PARTS
-// =========================================
-
 const BackgroundGradient = ({ active }: { active: ProductData }) => (
   <div className="absolute inset-0 -z-10 pointer-events-none">
     <motion.div
@@ -155,7 +99,7 @@ const BackgroundGradient = ({ active }: { active: ProductData }) => (
 );
 
 const ProductVisual = ({ data, isLeft }: { data: ProductData; isLeft: boolean }) => (
-  <motion.div layout="position" className="relative group shrink-0">
+  <div className="relative group shrink-0">
     <motion.div
       aria-hidden
       className={`pointer-events-none absolute inset-[-18%] rounded-full border border-dashed border-black/10 ${data.colors.ring}`}
@@ -181,10 +125,27 @@ const ProductVisual = ({ data, isLeft }: { data: ProductData; isLeft: boolean })
             key={data.id}
             src={data.image}
             alt={data.title}
-            variants={ANIMATIONS.image(isLeft)}
-            initial="initial"
-            animate="animate"
-            exit="exit"
+            initial={{
+              opacity: 0,
+              scale: 1.4,
+              filter: "blur(12px)",
+              rotate: isLeft ? -18 : 18,
+              x: isLeft ? -70 : 70,
+            }}
+            animate={{
+              opacity: 1,
+              scale: 1,
+              filter: "blur(0px)",
+              rotate: 0,
+              x: 0,
+              transition: { type: "spring", stiffness: 240, damping: 22 },
+            }}
+            exit={{
+              opacity: 0,
+              scale: 0.65,
+              filter: "blur(18px)",
+              transition: { duration: 0.22 },
+            }}
             className="w-full h-full object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.18)] p-6 select-none"
             draggable={false}
           />
@@ -192,35 +153,64 @@ const ProductVisual = ({ data, isLeft }: { data: ProductData; isLeft: boolean })
       </motion.div>
     </div>
 
-    <motion.div layout="position" className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap z-10">
+    <div className="absolute -bottom-8 left-1/2 -translate-x-1/2 whitespace-nowrap z-10">
       <div className="flex items-center gap-2 text-xs uppercase tracking-widest text-neutral-500 bg-white/70 px-4 py-2 rounded-full border border-black/5 backdrop-blur">
         <span className={`h-1.5 w-1.5 rounded-full ${data.colors.glow} animate-pulse`} />
         {data.stats.connectionStatus}
       </div>
-    </motion.div>
-  </motion.div>
+    </div>
+  </div>
 );
 
-const ProductDetails = ({ data, isLeft }: { data: ProductData; isLeft: boolean }) => {
+function ProductDetails({ data, isLeft }: { data: ProductData; isLeft: boolean }) {
   const alignClass = isLeft ? "items-start text-left" : "items-end text-right";
   const flexDirClass = isLeft ? "flex-row" : "flex-row-reverse";
 
+  const itemEnter = {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { type: "spring", stiffness: 110, damping: 22 },
+  };
+
   return (
-    <motion.div variants={ANIMATIONS.container} initial="hidden" animate="visible" exit="exit" className={`flex flex-col ${alignClass}`}>
-      <motion.h2 variants={ANIMATIONS.item} className="text-sm font-bold uppercase tracking-[0.22em] text-neutral-500 mb-2">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.06 } }}
+      exit={{ opacity: 0, transition: { duration: 0.2 } }}
+      className={`flex flex-col ${alignClass}`}
+    >
+      <motion.h2
+        initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
+        animate={itemEnter}
+        exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
+        className="text-sm font-bold uppercase tracking-[0.22em] text-neutral-500 mb-2"
+      >
         {data.label} Earbud
       </motion.h2>
 
-      <motion.h1 variants={ANIMATIONS.item} className="text-4xl md:text-5xl font-bold tracking-tight mb-2 text-neutral-950">
+      <motion.h1
+        initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
+        animate={itemEnter}
+        exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
+        className="text-4xl md:text-5xl font-bold tracking-tight mb-2 text-neutral-950"
+      >
         {data.title}
       </motion.h1>
 
-      <motion.p variants={ANIMATIONS.item} className={`text-neutral-600 mb-8 max-w-sm leading-relaxed ${isLeft ? "mr-auto" : "ml-auto"}`}>
+      <motion.p
+        initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
+        animate={itemEnter}
+        exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
+        className={`text-neutral-600 mb-8 max-w-sm leading-relaxed ${isLeft ? "mr-auto" : "ml-auto"}`}
+      >
         {data.description}
       </motion.p>
 
       <motion.div
-        variants={ANIMATIONS.item}
+        initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
+        animate={itemEnter}
+        exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
         className="w-full space-y-6 bg-white/70 p-6 rounded-2xl border border-black/5 backdrop-blur-sm shadow-[0_20px_60px_rgba(0,0,0,0.06)]"
       >
         {data.features.map((feature, idx) => (
@@ -236,7 +226,7 @@ const ProductDetails = ({ data, isLeft }: { data: ProductData; isLeft: boolean }
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${feature.value}%` }}
-                transition={{ duration: 1, delay: 0.35 + idx * 0.14 }}
+                transition={{ duration: 1, delay: 0.25 + idx * 0.12 }}
                 className={`absolute top-0 bottom-0 ${data.colors.bar} opacity-90`}
               />
             </div>
@@ -254,20 +244,24 @@ const ProductDetails = ({ data, isLeft }: { data: ProductData; isLeft: boolean }
         </div>
       </motion.div>
 
-      <motion.div variants={ANIMATIONS.item} className={`mt-6 flex items-center gap-3 text-neutral-500 ${flexDirClass}`}>
+      <motion.div
+        initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
+        animate={itemEnter}
+        exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
+        className={`mt-6 flex items-center gap-3 text-neutral-500 ${flexDirClass}`}
+      >
         <Battery size={16} />
         <span className="text-sm font-medium">{data.stats.batteryLevel}% Charge</span>
       </motion.div>
     </motion.div>
   );
-};
+}
 
-const Switcher = ({ activeId, onToggle }: { activeId: ProductId; onToggle: (id: ProductId) => void }) => {
+function Switcher({ activeId, onToggle }: { activeId: ProductId; onToggle: (id: ProductId) => void }) {
   const options = Object.values(PRODUCT_DATA).map((p) => ({ id: p.id, label: p.label }));
 
   return (
-    // Switcher'dan sonra boşluk istemiyorsun: bu wrapper altta bitecek, ekstra pb yok.
-    <div className="relative z-[60] mt-28 md:mt-36 flex justify-center pb-0">
+    <div className="relative z-[60] mt-28 md:mt-36 flex justify-center">
       <motion.div
         layout
         className="flex items-center gap-1 p-1.5 rounded-full bg-white/70 backdrop-blur-2xl border border-black/5 shadow-[0_20px_60px_rgba(0,0,0,0.10)] ring-1 ring-black/5"
@@ -295,15 +289,10 @@ const Switcher = ({ activeId, onToggle }: { activeId: ProductId; onToggle: (id: 
       </motion.div>
     </div>
   );
-};
+}
 
-// =========================================
-// 4) MAIN (DEFAULT EXPORT)
-// =========================================
-
-export default function EarbudShowcase() {
+export default function SpatialProductShowcase() {
   const [activeSide, setActiveSide] = useState<ProductId>("left");
-
   const currentData = PRODUCT_DATA[activeSide];
   const isLeft = activeSide === "left";
 
@@ -311,7 +300,6 @@ export default function EarbudShowcase() {
     <section className="relative isolate w-full overflow-hidden rounded-3xl bg-white text-neutral-900 border border-black/5 min-h-[900px] md:min-h-[980px] lg:min-h-[1050px] flex items-center">
       <BackgroundGradient active={currentData} />
 
-      {/* IMPORTANT: pb-0 => switcher sonrası boşluk yok */}
       <div className="relative z-10 w-full px-6 py-24 pb-0 max-w-7xl mx-auto">
         <motion.div
           layout
