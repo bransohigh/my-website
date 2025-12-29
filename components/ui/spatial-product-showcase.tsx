@@ -81,6 +81,11 @@ const PRODUCT_DATA: Record<ProductId, ProductData> = {
   },
 };
 
+// ---- transitions (NO spring type to satisfy TS)
+const EASE = [0.16, 1, 0.3, 1] as const;
+const ENTER = { duration: 0.55, ease: EASE };
+const EXIT = { duration: 0.22, ease: EASE };
+
 const BackgroundGradient = ({ active }: { active: ProductData }) => (
   <div className="absolute inset-0 -z-10 pointer-events-none">
     <motion.div
@@ -90,7 +95,7 @@ const BackgroundGradient = ({ active }: { active: ProductData }) => (
             ? "radial-gradient(circle at 0% 40%, rgba(56,189,248,0.26), transparent 62%)"
             : "radial-gradient(circle at 100% 40%, rgba(16,185,129,0.26), transparent 62%)",
       }}
-      transition={{ duration: 1.0, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 1.0, ease: EASE }}
       className="absolute inset-0"
     />
     <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_25%,rgba(0,0,0,0.03),transparent_55%)]" />
@@ -138,13 +143,13 @@ const ProductVisual = ({ data, isLeft }: { data: ProductData; isLeft: boolean })
               filter: "blur(0px)",
               rotate: 0,
               x: 0,
-              transition: { type: "spring", stiffness: 240, damping: 22 },
+              transition: ENTER,
             }}
             exit={{
               opacity: 0,
               scale: 0.65,
               filter: "blur(18px)",
-              transition: { duration: 0.22 },
+              transition: EXIT,
             }}
             className="w-full h-full object-contain drop-shadow-[0_30px_60px_rgba(0,0,0,0.18)] p-6 select-none"
             draggable={false}
@@ -170,47 +175,50 @@ function ProductDetails({ data, isLeft }: { data: ProductData; isLeft: boolean }
     opacity: 1,
     y: 0,
     filter: "blur(0px)",
-    transition: { type: "spring", stiffness: 110, damping: 22 },
+    transition: ENTER,
   };
+
+  const itemInit = { opacity: 0, y: 18, filter: "blur(10px)" };
+  const itemExit = { opacity: 0, y: -10, filter: "blur(5px)", transition: EXIT };
 
   return (
     <motion.div
       initial={{ opacity: 0 }}
-      animate={{ opacity: 1, transition: { staggerChildren: 0.08, delayChildren: 0.06 } }}
-      exit={{ opacity: 0, transition: { duration: 0.2 } }}
+      animate={{ opacity: 1, transition: { duration: 0.25, ease: EASE } }}
+      exit={{ opacity: 0, transition: EXIT }}
       className={`flex flex-col ${alignClass}`}
     >
       <motion.h2
-        initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
+        initial={itemInit}
         animate={itemEnter}
-        exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
+        exit={itemExit}
         className="text-sm font-bold uppercase tracking-[0.22em] text-neutral-500 mb-2"
       >
         {data.label} Earbud
       </motion.h2>
 
       <motion.h1
-        initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
+        initial={itemInit}
         animate={itemEnter}
-        exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
+        exit={itemExit}
         className="text-4xl md:text-5xl font-bold tracking-tight mb-2 text-neutral-950"
       >
         {data.title}
       </motion.h1>
 
       <motion.p
-        initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
+        initial={itemInit}
         animate={itemEnter}
-        exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
+        exit={itemExit}
         className={`text-neutral-600 mb-8 max-w-sm leading-relaxed ${isLeft ? "mr-auto" : "ml-auto"}`}
       >
         {data.description}
       </motion.p>
 
       <motion.div
-        initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
+        initial={itemInit}
         animate={itemEnter}
-        exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
+        exit={itemExit}
         className="w-full space-y-6 bg-white/70 p-6 rounded-2xl border border-black/5 backdrop-blur-sm shadow-[0_20px_60px_rgba(0,0,0,0.06)]"
       >
         {data.features.map((feature, idx) => (
@@ -226,7 +234,7 @@ function ProductDetails({ data, isLeft }: { data: ProductData; isLeft: boolean }
               <motion.div
                 initial={{ width: 0 }}
                 animate={{ width: `${feature.value}%` }}
-                transition={{ duration: 1, delay: 0.25 + idx * 0.12 }}
+                transition={{ duration: 0.9, ease: EASE, delay: 0.15 + idx * 0.1 }}
                 className={`absolute top-0 bottom-0 ${data.colors.bar} opacity-90`}
               />
             </div>
@@ -245,9 +253,9 @@ function ProductDetails({ data, isLeft }: { data: ProductData; isLeft: boolean }
       </motion.div>
 
       <motion.div
-        initial={{ opacity: 0, y: 18, filter: "blur(10px)" }}
+        initial={itemInit}
         animate={itemEnter}
-        exit={{ opacity: 0, y: -10, filter: "blur(5px)" }}
+        exit={itemExit}
         className={`mt-6 flex items-center gap-3 text-neutral-500 ${flexDirClass}`}
       >
         <Battery size={16} />
@@ -264,6 +272,7 @@ function Switcher({ activeId, onToggle }: { activeId: ProductId; onToggle: (id: 
     <div className="relative z-[60] mt-28 md:mt-36 flex justify-center">
       <motion.div
         layout
+        transition={{ duration: 0.35, ease: EASE }}
         className="flex items-center gap-1 p-1.5 rounded-full bg-white/70 backdrop-blur-2xl border border-black/5 shadow-[0_20px_60px_rgba(0,0,0,0.10)] ring-1 ring-black/5"
       >
         {options.map((opt) => (
@@ -278,7 +287,7 @@ function Switcher({ activeId, onToggle }: { activeId: ProductId; onToggle: (id: 
               <motion.div
                 layoutId="island-surface"
                 className="absolute inset-0 rounded-full bg-gradient-to-b from-black/[0.06] to-black/[0.02] shadow-inner"
-                transition={{ type: "spring", stiffness: 220, damping: 22 }}
+                transition={{ duration: 0.35, ease: EASE }}
               />
             )}
             <span className={`relative z-10 transition-colors duration-300 ${activeId === opt.id ? "text-neutral-950" : "text-neutral-600 hover:text-neutral-900"}`}>
@@ -303,7 +312,7 @@ export default function SpatialProductShowcase() {
       <div className="relative z-10 w-full px-6 py-24 pb-0 max-w-7xl mx-auto">
         <motion.div
           layout
-          transition={{ type: "spring", bounce: 0, duration: 0.9 }}
+          transition={{ duration: 0.6, ease: EASE }}
           className={`flex flex-col md:flex-row items-center justify-center gap-14 md:gap-24 lg:gap-32 w-full ${
             isLeft ? "md:flex-row" : "md:flex-row-reverse"
           }`}
